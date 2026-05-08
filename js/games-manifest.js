@@ -47,6 +47,7 @@ const GAMES_MANIFEST = [
         icon: '🔢',
         color: 'linear-gradient(135deg, #ff8000, #ff0040)',
         path: './games/2048/2048.js',
+        className: 'Game2048',
         category: 'puzzle',
         players: 1,
         difficulty: 'medium'

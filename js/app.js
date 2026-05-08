@@ -177,6 +177,13 @@ class GameHub {
                     </div>
                 </div>
             `;
+        } else if (gameId === '2048') {
+            container.innerHTML = `
+                <div class="touch-controls game2048">
+                    <span class="control-hint">👆 Swipe grid to move</span>
+                    <button class="touch-btn" data-action="restart">🔄 New Game</button>
+                </div>
+            `;
         }
         
         // Bind touch events
