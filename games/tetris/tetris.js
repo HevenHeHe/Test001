@@ -3,7 +3,7 @@
  * Complete implementation with full game logic
  */
 
-export default class TetrisGame {
+class TetrisGame {
     constructor() {
         this.id = 'tetris';
         this.COLS = 10;

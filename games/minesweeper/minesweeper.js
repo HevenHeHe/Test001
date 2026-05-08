@@ -3,7 +3,7 @@
  * Complete implementation for GameHub framework
  */
 
-export default class MinesweeperGame {
+class MinesweeperGame {
     constructor() {
         this.id = 'minesweeper';
         this.board = [];

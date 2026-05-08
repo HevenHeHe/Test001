@@ -10,7 +10,8 @@ const GAMES_MANIFEST = [
         description: '经典方块堆叠',
         icon: '🟦',
         color: 'linear-gradient(135deg, #00f0ff, #0060ff)',
-        path: './games/tetris/tetris.js',
+        path: 'games/tetris/tetris.js',
+        className: 'TetrisGame',
         category: 'arcade',
         players: 1,
         difficulty: 'medium'
@@ -21,7 +22,8 @@ const GAMES_MANIFEST = [
         description: '数字扫雷推理',
         icon: '💣',
         color: 'linear-gradient(135deg, #ff00ff, #ff0040)',
-        path: './games/minesweeper/minesweeper.js',
+        path: 'games/minesweeper/minesweeper.js',
+        className: 'MinesweeperGame',
         category: 'puzzle',
         players: 1,
         difficulty: 'hard'

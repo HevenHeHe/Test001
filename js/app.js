@@ -47,9 +47,12 @@ class GameHub {
         this.showLoading(true);
 
         try {
-            // Load game module
-            const module = await import(manifest.path);
-            this.currentGame = new module.default();
+            // Load game script dynamically (works with file:// and http://)
+            if (!window[manifest.className]) {
+                await this.loadScript(manifest.path);
+            }
+            
+            this.currentGame = new window[manifest.className]();
             
             // Setup game view
             document.getElementById('game-title').textContent = manifest.name;
@@ -68,10 +71,29 @@ class GameHub {
             
         } catch (err) {
             console.error('Failed to load game:', err);
-            alert('游戏加载失败，请重试');
+            alert('游戏加载失败: ' + err.message);
         } finally {
             this.showLoading(false);
         }
+    }
+
+    loadScript(src) {
+        return new Promise((resolve, reject) => {
+            // Check if already loading
+            const existing = document.querySelector(`script[data-game="${src}"]`);
+            if (existing) {
+                existing.addEventListener('load', resolve);
+                existing.addEventListener('error', reject);
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = src;
+            script.dataset.game = src;
+            script.onload = resolve;
+            script.onerror = () => reject(new Error(`加载失败: ${src}`));
+            document.head.appendChild(script);
+        });
     }
 
     // ==================== VIEW MANAGEMENT ====================
