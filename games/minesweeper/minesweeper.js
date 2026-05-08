@@ -16,10 +16,8 @@ export default class MinesweeperGame {
         this.timerId = null;
         this.flaggedCount = 0;
         this.revealedCount = 0;
-        this.canvas = null;
-        this.ctx = null;
         this.container = null;
-        this.cellSize = 30;
+        this.cellSize = 22;
         this.rows = 16;
         this.cols = 16;
         this.totalMines = 40;
@@ -28,6 +26,10 @@ export default class MinesweeperGame {
 
     init(container) {
         this.container = container;
+        // Calculate cell size to fit screen
+        const maxWidth = Math.min(window.innerWidth - 32, 375);
+        this.cellSize = Math.floor((maxWidth - 10) / this.cols);
+        this.cellSize = Math.max(20, Math.min(36, this.cellSize));
         this.setDifficulty('medium');
         this.resetGame();
     }
@@ -108,7 +110,7 @@ export default class MinesweeperGame {
             this.startTimer();
         }
 
-        this.#revealCell(r, c);
+        this.revealCell(r, c);
         
         if (this.board[r][c] === -1) {
             this.endGame(false);
@@ -117,7 +119,7 @@ export default class MinesweeperGame {
         }
         
         if (this.board[r][c] === 0) {
-            this.#floodFill(r, c);
+            this.floodFill(r, c);
             neonAudio?.reveal();
         } else {
             neonAudio?.reveal();
@@ -127,13 +129,13 @@ export default class MinesweeperGame {
         this.checkWin();
     }
 
-    #revealCell(r, c) {
+    revealCell(r, c) {
         if (this.revealed[r][c] || this.flagged[r][c]) return;
         this.revealed[r][c] = true;
         this.revealedCount++;
     }
 
-    #floodFill(r, c) {
+    floodFill(r, c) {
         const queue = [[r, c]];
         const visited = new Set([`${r},${c}`]);
         
@@ -149,7 +151,7 @@ export default class MinesweeperGame {
                     if (visited.has(`${nr},${nc}`)) continue;
                     
                     visited.add(`${nr},${nc}`);
-                    this.#revealCell(nr, nc);
+                    this.revealCell(nr, nc);
                     
                     if (this.board[nr][nc] === 0) {
                         queue.push([nr, nc]);
@@ -274,14 +276,6 @@ export default class MinesweeperGame {
                 // Events
                 cell.addEventListener('click', () => this.reveal(r, c));
                 cell.addEventListener('contextmenu', (e) => { e.preventDefault(); this.toggleFlag(r, c); });
-                cell.addEventListener('touchend', (e) => {
-                    // Long press detection for mobile
-                    if (this.longPressTimer) {
-                        clearTimeout(this.longPressTimer);
-                        this.longPressTimer = null;
-                        this.toggleFlag(r, c);
-                    }
-                });
                 
                 boardEl.appendChild(cell);
             }
@@ -327,7 +321,7 @@ export default class MinesweeperGame {
         
         // Update HUD
         if (window.hub) {
-            window.hub.updateScore(this.id, this.timer * 100); // Score based on speed
+            window.hub.updateScore(this.id, this.timer * 100);
         }
     }
 

@@ -234,3 +234,13 @@ const Storage = {
 if (typeof module !== 'undefined') {
     module.exports = { GameCanvas, InputManager, GameLoop, Device, Storage, CONSTANTS };
 }
+
+// Browser global exposure
+if (typeof window !== 'undefined') {
+    window.GameCanvas = GameCanvas;
+    window.InputManager = InputManager;
+    window.GameLoop = GameLoop;
+    window.Device = Device;
+    window.Storage = Storage;
+    window.CONSTANTS = CONSTANTS;
+}
