@@ -534,3 +534,35 @@ body::before {
 .games-grid::-webkit-scrollbar {
     display: none;
 }
+
+/* ==================== SNAKE D-PAD ==================== */
+.touch-controls.snake {
+    flex-direction: column;
+    gap: 0;
+}
+
+.touch-controls.snake .dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.touch-controls.snake .dpad-mid {
+    display: flex;
+    gap: 4px;
+}
+
+.touch-controls.snake .touch-btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 255, 64, 0.08);
+    border-color: rgba(0, 255, 64, 0.3);
+    color: var(--neon-green);
+    font-size: 1.4rem;
+}
+
+.touch-controls.snake .touch-btn:active {
+    background: rgba(0, 255, 64, 0.25);
+    box-shadow: 0 0 20px rgba(0, 255, 64, 0.4);
+}

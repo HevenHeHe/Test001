@@ -164,6 +164,19 @@ class GameHub {
                     <span class="mode-label">长按格子标记/揭开</span>
                 </div>
             `;
+        } else if (gameId === 'snake') {
+            container.innerHTML = `
+                <div class="touch-controls snake">
+                    <div class="dpad">
+                        <button class="touch-btn" data-action="up">▲</button>
+                        <div class="dpad-mid">
+                            <button class="touch-btn" data-action="left">◀</button>
+                            <button class="touch-btn" data-action="right">▶</button>
+                        </div>
+                        <button class="touch-btn" data-action="down">▼</button>
+                    </div>
+                </div>
+            `;
         }
         
         // Bind touch events

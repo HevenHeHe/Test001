@@ -34,7 +34,8 @@ const GAMES_MANIFEST = [
         description: '经典贪吃蛇',
         icon: '🐍',
         color: 'linear-gradient(135deg, #00ff40, #00ff00)',
-        path: './games/snake/snake.js',
+        path: 'games/snake/snake.js',
+        className: 'SnakeGame',
         category: 'arcade',
         players: 1,
         difficulty: 'easy'
