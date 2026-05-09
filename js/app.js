@@ -99,21 +99,27 @@ class GameHub {
     // ==================== VIEW MANAGEMENT ====================
     switchView(viewId) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(viewId).classList.add('active');
+        const el = document.getElementById(viewId);
+        if (el) el.classList.add('active');
     }
 
     exitGame() {
         if (this.currentGame) {
-            this.currentGame.destroy?.();
+            if (typeof this.currentGame.destroy === 'function') {
+                this.currentGame.destroy();
+            }
             this.currentGame = null;
         }
-        document.getElementById('game-container').innerHTML = '';
-        document.getElementById('game-controls').innerHTML = '';
+        const container = document.getElementById('game-container');
+        const controls = document.getElementById('game-controls');
+        if (container) container.innerHTML = '';
+        if (controls) controls.innerHTML = '';
         this.switchView('lobby');
     }
 
     showLoading(show) {
-        document.getElementById('load-screen').style.display = show ? 'flex' : 'none';
+        const loader = document.getElementById('load-screen');
+        if (loader) loader.style.display = show ? 'flex' : 'none';
     }
 
     // ==================== SCORE MANAGEMENT ====================
@@ -132,7 +138,7 @@ class GameHub {
     updateHighScoreUI(gameId, score) {
         // Update game view if active
         const highScoreEl = document.getElementById('game-highscore');
-        if (highScoreEl && this.currentGame?.id === gameId) {
+        if (highScoreEl && this.currentGame && this.currentGame.id === gameId) {
             highScoreEl.textContent = `🏆 ${score}`;
         }
         // Update lobby card
@@ -182,6 +188,13 @@ class GameHub {
                 <div class="touch-controls game2048">
                     <span class="control-hint">👆 Swipe grid to move</span>
                     <button class="touch-btn" data-action="restart">🔄 New Game</button>
+                </div>
+            `;
+        } else if (gameId === 'flappy') {
+            container.innerHTML = `
+                <div class="touch-controls flappy">
+                    <span class="control-hint">🖐️ Tap screen to fly</span>
+                    <button class="touch-btn" data-action="restart">🔄 Retry</button>
                 </div>
             `;
         }

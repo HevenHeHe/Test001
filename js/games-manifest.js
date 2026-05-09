@@ -46,7 +46,7 @@ const GAMES_MANIFEST = [
         description: '数字合成挑战',
         icon: '🔢',
         color: 'linear-gradient(135deg, #ff8000, #ff0040)',
-        path: './games/2048/2048.js',
+        path: 'games/2048/2048.js',
         className: 'Game2048',
         category: 'puzzle',
         players: 1,
@@ -58,7 +58,8 @@ const GAMES_MANIFEST = [
         description: '管道飞行挑战',
         icon: '🐦',
         color: 'linear-gradient(135deg, #ffff00, #ff8000)',
-        path: './games/flappy/flappy.js',
+        path: 'games/flappy/flappy.js',
+        className: 'FlappyGame',
         category: 'endless',
         players: 1,
         difficulty: 'hard'
@@ -69,7 +70,8 @@ const GAMES_MANIFEST = [
         description: '弹球破砖块',
         icon: '🧱',
         color: 'linear-gradient(135deg, #ff0040, #8000ff)',
-        path: './games/breakout/breakout.js',
+        path: 'games/breakout/breakout.js',
+        className: 'BreakoutGame',
         category: 'arcade',
         players: 1,
         difficulty: 'easy'
@@ -80,7 +82,8 @@ const GAMES_MANIFEST = [
         description: '双人弹球对战',
         icon: '🏓',
         color: 'linear-gradient(135deg, #00f0ff, #00ff40)',
-        path: './games/pong/pong.js',
+        path: 'games/pong/pong.js',
+        className: 'PongGame',
         category: 'multiplayer',
         players: 2,
         difficulty: 'easy'
@@ -91,7 +94,8 @@ const GAMES_MANIFEST = [
         description: '记忆序列挑战',
         icon: '🎵',
         color: 'linear-gradient(135deg, #ff00ff, #00f0ff)',
-        path: './games/simon/simon.js',
+        path: 'games/simon/simon.js',
+        className: 'SimonGame',
         category: 'memory',
         players: 1,
         difficulty: 'medium'

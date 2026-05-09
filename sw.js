@@ -3,7 +3,7 @@
  * Caches assets for offline play
  */
 
-const CACHE_NAME = 'neon-protocol-v1';
+const CACHE_NAME = 'neon-protocol-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -13,7 +13,9 @@ const ASSETS = [
   '/js/games-manifest.js',
   '/js/app.js',
   '/games/tetris/tetris.js',
-  '/games/minesweeper/minesweeper.js'
+  '/games/minesweeper/minesweeper.js',
+  '/games/snake/snake.js',
+  '/games/2048/2048.js'
 ];
 
 // Install: cache assets
