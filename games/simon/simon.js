@@ -425,3 +425,6 @@ class SimonGame {
         }
     }
 }
+
+// Standalone support
+if (typeof window !== 'undefined') window.SimonGame = SimonGame;
