@@ -11,6 +11,7 @@
     <title>GAME HUB // NEON PROTOCOL</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/views.css">
 </head>
 <body class="page-lobby">
     <!-- ==================== LOBBY VIEW ==================== -->
@@ -56,8 +57,43 @@
             <!-- Touch controls injected per game -->
         </div>
     </div>
-    
-    <!-- ==================== LOAD SCREEN ==================== -->
+
+    <!-- ==================== LEADERBOARD VIEW ==================== -->
+    <div id="leaderboard" class="view">
+        <div class="page-header">
+            <button class="btn-icon" onclick="hub.switchView('lobby')">←</button>
+            <h2 class="page-title">LEADERBOARD</h2>
+        </div>
+        <div class="page-content">
+            <div id="leaderboard-content" class="leaderboard-list">
+                <!-- Scores populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SETTINGS VIEW ==================== -->
+    <div id="settings" class="view">
+        <div class="page-header">
+            <button class="btn-icon" onclick="hub.switchView('lobby')">←</button>
+            <h2 class="page-title">SETTINGS</h2>
+        </div>
+        <div class="page-content">
+            <div class="settings-group">
+                <label class="setting-item">
+                    <span>SOUND EFFECTS</span>
+                    <input type="checkbox" id="setting-sound" checked>
+                </label>
+                <label class="setting-item">
+                    <span>VIBRATION</span>
+                    <input type="checkbox" id="setting-vibration" checked>
+                </label>
+            </div>
+            <div class="settings-actions">
+                <button id="btn-clear-data" class="btn-danger">CLEAR ALL DATA</button>
+                <button id="btn-save-settings" class="btn-primary">SAVE</button>
+            </div>
+        </div>
+    </div>
     <div id="load-screen" class="screen">
         <div class="load-spinner"></div>
         <p class="load-text">INITIALIZING...</p>

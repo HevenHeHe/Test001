@@ -197,6 +197,27 @@ class GameHub {
                     <button class="touch-btn" data-action="restart">🔄 Retry</button>
                 </div>
             `;
+        } else if (gameId === 'breakout') {
+            container.innerHTML = `
+                <div class="touch-controls breakout">
+                    <span class="control-hint">👆 Drag to move paddle</span>
+                    <button class="touch-btn" data-action="restart">🔄 New Game</button>
+                </div>
+            `;
+        } else if (gameId === 'pong') {
+            container.innerHTML = `
+                <div class="touch-controls pong">
+                    <span class="control-hint">👆 Top/Bottom half for up/down</span>
+                    <button class="touch-btn" data-action="restart">🔄 Retry</button>
+                </div>
+            `;
+        } else if (gameId === 'simon') {
+            container.innerHTML = `
+                <div class="touch-controls simon">
+                    <span class="control-hint">👆 Tap panels to repeat sequence</span>
+                    <button class="touch-btn" data-action="restart">🔄 New Game</button>
+                </div>
+            `;
         }
         
         // Bind touch events
@@ -211,12 +232,91 @@ class GameHub {
         });
     }
 
+    // ==================== LEADERBOARD ====================
+    renderLeaderboard() {
+        const sorted = Object.entries(this.scores)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10);
+
+        const content = document.getElementById('leaderboard-content');
+        if (!content) return;
+
+        if (sorted.length === 0) {
+            content.innerHTML = '<p class="empty-state">No scores yet. Play some games!</p>';
+            return;
+        }
+
+        content.innerHTML = sorted.map(([gameId, score], i) => {
+            const game = GAMES_MANIFEST.find(g => g.id === gameId);
+            return `
+                <div class="leaderboard-row">
+                    <span class="rank">#${i + 1}</span>
+                    <span class="game-name">${game ? game.name : gameId}</span>
+                    <span class="score-value">${score}</span>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ==================== SETTINGS ====================
+    renderSettings() {
+        const soundEl = document.getElementById('setting-sound');
+        const vibEl = document.getElementById('setting-vibration');
+        if (soundEl) soundEl.checked = this.settings.sound;
+        if (vibEl) vibEl.checked = this.settings.vibration;
+    }
+
+    saveSettings() {
+        const soundEl = document.getElementById('setting-sound');
+        const vibEl = document.getElementById('setting-vibration');
+        if (soundEl) this.settings.sound = soundEl.checked;
+        if (vibEl) this.settings.vibration = vibEl.checked;
+        localStorage.setItem('neonSettings', JSON.stringify(this.settings));
+        neonAudio?.refresh();
+    }
+
+    clearAllData() {
+        if (confirm('Clear all scores and settings? This cannot be undone.')) {
+            localStorage.removeItem('neonScores');
+            localStorage.removeItem('neonSettings');
+            this.scores = {};
+            this.settings = { sound: true, vibration: true };
+            location.reload();
+        }
+    }
+
     // ==================== EVENT BINDING ====================
     bindEvents() {
         document.getElementById('btn-back').addEventListener('click', () => {
             this.exitGame();
         });
-        
+
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const view = item.dataset.view;
+                if (view === 'leaderboard') {
+                    this.switchView('leaderboard');
+                    this.renderLeaderboard();
+                }
+                if (view === 'settings') {
+                    this.switchView('settings');
+                    this.renderSettings();
+                }
+                if (view === 'lobby') this.switchView('lobby');
+            });
+        });
+
+        // Settings buttons
+        document.getElementById('btn-save-settings')?.addEventListener('click', () => {
+            this.saveSettings();
+            this.switchView('lobby');
+        });
+
+        document.getElementById('btn-clear-data')?.addEventListener('click', () => {
+            this.clearAllData();
+        });
+
         // Handle back button on mobile
         window.addEventListener('popstate', () => {
             if (this.currentGame) {
